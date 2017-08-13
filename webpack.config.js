@@ -1,4 +1,4 @@
-// 这个文件是webpack工具的配置文件，可以使用node的各种内置模块和写法
+2// 这个文件是webpack工具的配置文件，可以使用node的各种内置模块和写法
 
 
 // 这是node的内置模块，可以直接导入使用
@@ -63,7 +63,7 @@ module.exports = {
 
             // 图片，先压缩，然后打包成js模块，其中小图片会转成base64，大图片仍然为url引用
             {
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpg|gif|ttf)$/,
                 use: [
                     // 大约小于10kb的图片变成base64编码继承到js中，比较大的图片仍然以url方式引入
                     { loader: 'url-loader', options: { limit: 10000 } }
