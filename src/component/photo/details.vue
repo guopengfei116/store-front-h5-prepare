@@ -2,13 +2,11 @@
   <section class="details">
     <div class="mui-card">
       <div class="mui-card-header">
-        <h3>{{ info.title }}</h3>
-        <div class="mui-card-content-inner">
-          <p>
-            <span>预览量：{{ info.click }}</span>
-            <span>发布时间：{{ info.add_time | formatDate }}</span>
-          </p>
-        </div>
+        <h4>{{ info.title }}</h4>
+        <p>
+          <span>发布时间：{{ info.add_time | formatDate }}</span>
+          <span>预览量：{{ info.click }}</span>
+        </p>
       </div>
       <div class="mui-card-content">
         <ul class="mui-table-view mui-grid-view">
