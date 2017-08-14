@@ -12,6 +12,9 @@ export default {
 </script>
 
 <style lang='less'>
+  .mint-header {
+    background-color: #7ad2bc;
+  }
   .header {
     div {
       height: 40px;
