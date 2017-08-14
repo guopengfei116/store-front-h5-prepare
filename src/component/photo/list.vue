@@ -8,15 +8,17 @@
         </li>
     </ul>
     <!-- 图片列表 -->
-    <div class="mui-card" v-for="item in photoList" :key="item.id">
-      <div class="mui-card-header mui-card-media" :style="getStyle(item)"></div>
-      <div class="mui-card-content">
-        <div class="mui-card-content-inner">
-          <p>{{ item.title }}</p>
-          <p style="color: #333;">{{ item.zhaiyao }}</p>
+      <div class="mui-card" v-for="item in photoList" :key="item.id">
+        <router-link :to="'/photo/details/' + item.id">
+          <div class="mui-card-header mui-card-media" :style="getStyle(item)"></div>
+        </router-link>
+        <div class="mui-card-content">
+          <div class="mui-card-content-inner">
+            <p>{{ item.title }}</p>
+            <p style="color: #333;">{{ item.zhaiyao }}</p>
+          </div>
         </div>
       </div>
-    </div>
   </section>
 </template>
 
