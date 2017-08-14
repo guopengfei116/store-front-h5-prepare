@@ -19,9 +19,9 @@
                 <ul class="mui-table-view">
                     <li v-for="(item, i) in list" :key="i" class="mui-table-view-cell">
                         <div>
-                            <span>第{{ i + 1 }}楼</span>
-                            <span>用户：{{ item.user_name }}</span>
-                            <span>发表时间：{{ item.add_time | formatDate }}</span>
+                            <span>第{{ i + 1 }}楼 </span>
+                            <span>用户:{{ item.user_name }} </span>
+                            <span>发表时间:{{ item.add_time | formatDate }} </span>
                         </div>
                         <p>{{ item.content }}</p>
                     </li>
@@ -66,7 +66,7 @@ export default {
                     add_time: Date.now(),
                     content: this.content
                 });
-                // 清空输入框
+                // 清空输入框，记得放在最后清空
                 this.content = '';
             }
         });
@@ -94,9 +94,12 @@ export default {
 
 <style lang="less">
   .comment {
-      .mui-card-content p {
-          background-color: rgba(0, 0, 0, .3);
-          color: #333;
+      .mui-card-content {
+        padding: 4px 8px;
+        p {
+            background-color: rgba(0, 0, 0, .3);
+            color: #333;
+        }
       }
       .mui-btn-success {
           background-color: #1be4db;

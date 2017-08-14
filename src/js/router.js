@@ -10,10 +10,14 @@ import CnewsDetails from '../component/news/details.vue';
 // 导出一个路由实例
 export default new VueRouter({
     routes: [
+        // 首页
         { path: '/', redirect: '/index' },
         { path: '/index', component: Cindex },
-        // 新闻详细相关路由配置
+        // 新闻详细
         { path: '/news/list', component: CnewsList },
-        { path: '/news/details/:id', component: CnewsDetails }
+        { path: '/news/details/:id', component: CnewsDetails },
+        // 图片分享
+        { path: '/photo/list', component: CphotoList, name: 'ptLs' },
+        { path: '/photo/details/:id', component: CphotoDetails, name: 'ptDl' },
     ]
 });
