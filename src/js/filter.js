@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 // 过滤器回调的第一个值固定为插值表达式中的初始值
-Vue.filter('formatDate', function(val, format) {
+Vue.filter('formatDate', function(val, format = 'YYYY-MM-DD') {
 
     // 先创建匹配年月日的三个不同正则
     let yReg = /YYYY/i;
