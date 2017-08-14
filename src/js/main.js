@@ -15,7 +15,8 @@ Vue.use(MintUI);
 // 二、导入我们自己的东西
 
 // 2.1 导入过滤器
-import './filter.js';
+import Filter from './filter.js';
+Vue.use(Filter);
 
 // 2.2 导入组件
 import App from '../component/App.vue';  // 根组件
