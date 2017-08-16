@@ -21,11 +21,11 @@ export default {
         this.$http.get(url).then(rep => {
           let body = rep.body;
           if(body.status == 0) {
-            // 因为公共的轮播图使用的图片地址属性名为src，所以这里转换一下
+            // 因为公共的轮播图使用的图片地址属性名为src，这里的图片地址名为img，所以转换一下
             this.lunbos = body.message.map(item => (item.src = item.img) && item);
             // 上面的写法和这里一个意思
             // this.lunbos = body.message.map(item => {
-            //   item.src = item.url;
+            //   item.src = item.img;
             //   return item;
             // });
           }
