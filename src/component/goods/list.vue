@@ -4,7 +4,7 @@
     <ul class="mui-table-view mui-grid-view">
       <!-- 商品详情 -->
       <li class="mui-table-view-cell mui-media mui-col-xs-6" v-for="item in list" :key="item.id">
-      	<router-link to="/">
+      	<router-link :to="{ name: 'goodsD', params: { id: item.id } }">
 	        <div class="mui-card">
 	          <!-- 商品图片 -->
 	          <div class="mui-card-header">

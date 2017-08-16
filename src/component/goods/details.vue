@@ -1,6 +1,9 @@
 <template>
   <article class="goods-detail">
-
+    <!-- 标题 -->
+    <v-title :title="title"></v-title>
+    <!-- 轮播图 -->
+    <v-swipe :list="lunbos"></v-swipe>
   	<!-- 商品购买 -->
     <div class="mui-card">
       <!-- 名称 -->
@@ -47,6 +50,44 @@
 </template>
 
 <script>
+  import config from '../../js/config.js';
+  import Ctitle from '../common/title.vue';
+  import Cswipe from '../common/swipe.vue';
+
+  export default {
+
+    data() {
+      return {
+        title: '商品购买',
+        lunbos: []
+      }
+    },
+
+    methods: {
+      // 获取轮播图数据
+      getLunbos() {
+        let url = config.photoHums + this.$route.params.id;
+        this.$http.get(url).then(rep => {
+          let body = rep.body;
+          if(body.status == 0) {
+            this.lunbos = body.message.map(item => {
+              item.src = config.imgDomain + item.src;
+              return item;
+            });
+          }
+        });
+      }
+    },
+
+    created() {
+      this.getLunbos();
+    },
+    
+    components: {
+      'v-title': Ctitle,
+      'v-swipe': Cswipe
+    }
+  };
 </script>
 
 <style lang="less">
