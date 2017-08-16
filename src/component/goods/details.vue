@@ -7,10 +7,10 @@
   	<!-- 商品购买 -->
     <div class="mui-card">
       <!-- 名称 -->
-      <div class="mui-card-header">小米666</div>
+      <div class="mui-card-header">{{ goods.title }}</div>
       <!-- 价格 -->
       <div class="mui-card-content mui-card-content-inner">
-        <div class="price"> <s>市场价:￥8888</s> <span>销售价: </span> <em>￥888</em> </div>
+        <div class="price"> <s>市场价:￥{{ goods.market_price }}</s> <span>销售价: </span> <em>￥{{ goods.sell_price }}</em> </div>
         <div> <span>购买数量：</span>
           <!--数字输入框 -->
           <div class="mui-numbox">
@@ -31,17 +31,17 @@
 		<!-- 评论与介绍 -->
 		<div class="mui-card">
 			<!-- 选项卡 -->
-		    <mt-navbar value="tab-container2">
-			  <mt-tab-item id="tab-container1">商品评论</mt-tab-item>
-			  <mt-tab-item id="tab-container2">图文介绍</mt-tab-item>
+		  <mt-navbar v-model="selectedTab">
+			  <mt-tab-item id="comment">商品评论</mt-tab-item>
+			  <mt-tab-item id="info">图文介绍</mt-tab-item>
 			</mt-navbar>
 			<!-- 内容 -->
-		    <mt-tab-container value="tab-container2">
-			  <mt-tab-container-item id="tab-container1">
-			    <mt-cell v-for="n in 10" title="tab-container 1"></mt-cell>
+		  <mt-tab-container v-model="selectedTab">
+			  <mt-tab-container-item id="comment">
+			    <v-comment :id="id"></v-comment>
 			  </mt-tab-container-item>
-			  <mt-tab-container-item id="tab-container2">
-			    <mt-cell v-for="n in 5" title="tab-container 2"></mt-cell>
+			  <mt-tab-container-item id="info">
+			    <v-info :id="id"></v-info>
 			  </mt-tab-container-item>
 			</mt-tab-container>
 		</div>
@@ -53,20 +53,25 @@
   import config from '../../js/config.js';
   import Ctitle from '../common/title.vue';
   import Cswipe from '../common/swipe.vue';
+  import Ccomment from '../common/comment.vue';
+  import Cinfo from './son/info.vue';
 
   export default {
 
     data() {
       return {
         title: '商品购买',
-        lunbos: []
+        lunbos: [],
+        goods: {},
+        selectedTab: '',
+        id: this.$route.params.id
       }
     },
 
     methods: {
       // 获取轮播图数据
       getLunbos() {
-        let url = config.photoHums + this.$route.params.id;
+        let url = config.photoHums + this.id;
         this.$http.get(url).then(rep => {
           let body = rep.body;
           if(body.status == 0) {
@@ -76,16 +81,29 @@
             });
           }
         });
+      },
+      // 获取商品价格信息
+      getPrice() {
+        let url = config.goodsPrice + this.id;
+        this.$http.get(url).then(rep => {
+          let body = rep.body;
+          if(body.status == 0) {
+            this.goods = body.message[0];
+          }
+        });
       }
     },
 
     created() {
       this.getLunbos();
+      this.getPrice();
     },
     
     components: {
       'v-title': Ctitle,
-      'v-swipe': Cswipe
+      'v-swipe': Cswipe,
+      'v-comment': Ccomment,
+      'v-info': Cinfo
     }
   };
 </script>
