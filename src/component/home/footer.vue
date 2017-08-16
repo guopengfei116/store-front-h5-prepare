@@ -11,7 +11,7 @@
         </router-link>
         <router-link class="mui-tab-item" to="/shopcart">
           <span class="mui-icon mui-icon-extra mui-icon-extra-express">
-            <span class="mui-badge">0</span>
+            <span class="mui-badge">{{ total }}</span>
           </span>
           <span class="mui-tab-label">购物车</span>
         </router-link>
@@ -25,8 +25,13 @@
 </template>
 
 <script>
+import goodsStorage from '../../js/model/goods.js';
 export default {
-  
+  data() {
+    return {
+      total: goodsStorage.get()
+    };
+  }
 }
 </script>
 

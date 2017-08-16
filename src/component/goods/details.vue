@@ -56,6 +56,7 @@
 
 <script>
   import config from '../../js/config.js';
+  import goodsStorage from '../../js/model/goods.js';
   import Ctitle from '../common/title.vue';
   import Cswipe from '../common/swipe.vue';
   import Ccomment from '../common/comment.vue';
@@ -71,7 +72,7 @@
         goods: {},
         selectedTab: '',
         id: this.$route.params.id,
-        total: 10
+        total: goodsStorage.get(this.$route.params.id) // 页面一上来就从本地读取这个商品的历史购买数量
       }
     },
 
@@ -105,8 +106,12 @@
       },
       // 加入购物车
       addShopcart() {
-        // 目前先把这个商品数量替换到购物车图标中，后续再完善
-        document.querySelector('.mui-badge').innerHTML = this.total;
+
+        // 点击购物车，就把这个商品的购买数量持久化记录下来
+        goodsStorage.set(this.id, this.total);
+
+        // 点击购物车后，把商品的总数挂载上去
+        document.querySelector('.mui-badge').innerHTML = goodsStorage.get();
       }
     },
 
