@@ -11,7 +11,7 @@
       <div class="mui-card-content">
         <ul class="mui-table-view mui-grid-view">
 		        <li class="mui-table-view-cell mui-media mui-col-xs-4" v-for="item in hums" :key="item.src">
-		            <img :src="item.src"/>
+		            <img v-preview="item.src" :src="item.src"/>
             </li>
 		    </ul>
       </div>

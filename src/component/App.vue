@@ -1,6 +1,7 @@
 <template>
   <main>
       <v-header></v-header>
+      <lg-preview></lg-preview>
       <router-view></router-view>
       <v-footer></v-footer>
   </main>
