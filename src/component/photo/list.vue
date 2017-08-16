@@ -10,7 +10,9 @@
     <!-- 图片列表 -->
       <div class="mui-card" v-for="item in photoList" :key="item.id">
         <router-link :to="{ name: 'photoD', params: { id: item.id } }">
-          <div class="mui-card-header mui-card-media" :style="getStyle(item)"></div>
+          <div class="mui-card-header">
+            <img v-lazy="item.img_url" />
+          </div>
         </router-link>
         <div class="mui-card-content">
           <div class="mui-card-content-inner">
@@ -85,6 +87,15 @@ export default {
       overflow: hidden;
       &-cell {
         float: left;
+      }
+    }
+    .mui-card-header img {
+      width: 100%;
+      height: 100%;
+      &[lazy=loading] {
+        width: 40px;
+        height: 300px;
+        margin: auto;
       }
     }
   }
