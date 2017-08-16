@@ -13,18 +13,14 @@
         <div class="price"> <s>市场价:￥{{ goods.market_price }}</s> <span>销售价: </span> <em>￥{{ goods.sell_price }}</em> </div>
         <div> <span>购买数量：</span>
           <!--数字输入框 -->
-          <div class="mui-numbox">
-          	<button class="mui-btn mui-btn-numbox-minus">-</button>
-          	<input class="mui-input-numbox" type="number">
-          	<button class="mui-btn mui-btn-numbox-plus">+</button>
-          </div>
+          <v-numbox :initVal="total" @change="upTotal"></v-numbox>
         </div>
       </div>
       <!-- 按钮 -->
       <div class="mui-card-footer">
       	<button type="button" class="mui-btn mui-btn-success mui-btn-block mui-btn-outlined">结算</button>
         <div></div>
-        <button type="button" class="mui-btn mui-btn-success mui-btn-block mui-btn-outlined">加入购物车</button>
+        <button type="button" class="mui-btn mui-btn-success mui-btn-block mui-btn-outlined" @click="addShopcart">加入购物车</button>
       </div>
     </div>
 
@@ -32,10 +28,19 @@
 		<div class="mui-card">
 			<!-- 选项卡 -->
 		  <mt-navbar v-model="selectedTab">
+			  <mt-tab-item id="v-comment">商品评论</mt-tab-item>
+			  <mt-tab-item id="v-info">图文介绍</mt-tab-item>
+			</mt-navbar>
+			<!-- 显示内容，需要传入id，需要根据is值来控制组件的切换 -->
+		  <component :id="id" :is="selectedTab"></component>
+		</div>
+
+    <!-- 评论与介绍 -->
+		<!-- <div class="mui-card">
+		  <mt-navbar v-model="selectedTab">
 			  <mt-tab-item id="comment">商品评论</mt-tab-item>
 			  <mt-tab-item id="info">图文介绍</mt-tab-item>
 			</mt-navbar>
-			<!-- 内容 -->
 		  <mt-tab-container v-model="selectedTab">
 			  <mt-tab-container-item id="comment">
 			    <v-comment :id="id"></v-comment>
@@ -44,7 +49,7 @@
 			    <v-info :id="id"></v-info>
 			  </mt-tab-container-item>
 			</mt-tab-container>
-		</div>
+		</div> -->
 
   </article>
 </template>
@@ -54,6 +59,7 @@
   import Ctitle from '../common/title.vue';
   import Cswipe from '../common/swipe.vue';
   import Ccomment from '../common/comment.vue';
+  import Cnumbox from '../common/numbox.vue';
   import Cinfo from './son/info.vue';
 
   export default {
@@ -64,7 +70,8 @@
         lunbos: [],
         goods: {},
         selectedTab: '',
-        id: this.$route.params.id
+        id: this.$route.params.id,
+        total: 10
       }
     },
 
@@ -91,6 +98,15 @@
             this.goods = body.message[0];
           }
         });
+      },
+      // 更新商品的选择数量值
+      upTotal(v) {
+        this.total = v;
+      },
+      // 加入购物车
+      addShopcart() {
+        // 目前先把这个商品数量替换到购物车图标中，后续再完善
+        document.querySelector('.mui-badge').innerHTML = this.total;
       }
     },
 
@@ -103,7 +119,8 @@
       'v-title': Ctitle,
       'v-swipe': Cswipe,
       'v-comment': Ccomment,
-      'v-info': Cinfo
+      'v-info': Cinfo,
+      'v-numbox': Cnumbox
     }
   };
 </script>
