@@ -3,7 +3,7 @@
     <v-title :title="title"></v-title>
     <ul class="mui-table-view">
         <li v-for="item in list" :key="item.id" class="mui-table-view-cell mui-media">
-            <router-link :to="'/news/details/' + item.id" >
+            <router-link :to="{ name: 'newsD', params: { id: item.id } }">
                 <img :src="item.img_url" class="mui-media-object mui-pull-left">
                 <div class="mui-media-body">
                     <p class="mui-ellipsis">{{ item.title }}</p>

@@ -9,7 +9,7 @@
     </ul>
     <!-- 图片列表 -->
       <div class="mui-card" v-for="item in photoList" :key="item.id">
-        <router-link :to="'/photo/details/' + item.id">
+        <router-link :to="{ name: 'photoD', params: { id: item.id } }">
           <div class="mui-card-header mui-card-media" :style="getStyle(item)"></div>
         </router-link>
         <div class="mui-card-content">
