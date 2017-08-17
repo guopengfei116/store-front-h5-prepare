@@ -32,7 +32,7 @@
         </ul>
       </div>
       <div class="total_btn">
-        <mt-button type="primary">付 款</mt-button>
+        <mt-button type="primary" @click.native="payment">付 款</mt-button>
       </div>
     </div>
 
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+  import { Toast } from 'mint-ui';
   import config from '../../js/config.js';
   import Ctitle from '../common/title.vue';
   import Cnumbox from '../common/numbox.vue';
@@ -121,6 +122,27 @@
        this.shopcartList[0].selected = !this.shopcartList[0].selected;
        this.shopcartList[0].selected = !this.shopcartList[0].selected;
        goodsStorage.set(id, total);
+       
+       // 把商品的总数挂载上去
+       document.querySelector('.mui-badge').innerHTML = goodsStorage.get();
+     },
+
+     // 付款
+     payment() {
+
+      // 只要有一个商品被选购，并且值不为0，那么结果就为true
+      let hasSelected = this.shopcartList.some(item => item.selected && goodsStorage.get(item.id));
+      if(!hasSelected) {
+        Toast('请至少选购一件商品！');
+      }
+      // 使用正则判断用户是否已经登陆，登陆成功后跳转到订单页
+      else if(!/SESSIONID=\w+/.test(document.cookie)){
+        this.$router.push({ name: 'login', query: { nextpage: '/shopcart/order' } });
+      }
+      // 选购了商品，也登陆了，才能转到订单页
+      else {
+        this.$router.push('/shopcart/order');
+      }
      }
    },
 
