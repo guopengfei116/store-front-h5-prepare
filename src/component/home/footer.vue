@@ -9,7 +9,7 @@
           <span class="mui-icon mui-icon-extra mui-icon-extra-gift"></span>
           <span class="mui-tab-label">商品购买</span>
         </router-link>
-        <router-link class="mui-tab-item" to="/shopcart">
+        <router-link class="mui-tab-item" to="/shopcart/list">
           <span class="mui-icon mui-icon-extra mui-icon-extra-express">
             <span class="mui-badge">{{ total }}</span>
           </span>
