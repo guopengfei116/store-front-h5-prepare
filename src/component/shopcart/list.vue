@@ -13,10 +13,10 @@
           <ul>
             <li>￥{{ item.sell_price }}</li>
             <li>
-              <div class="mui-numbox"> <button class="mui-btn mui-btn-numbox-minus">-</button> <input class="mui-input-numbox" type="number"> <button class="mui-btn mui-btn-numbox-plus">+</button> </div>
+              <v-numbox :initVal="getTotal(item.id)" @change="upTotal(item.id, $event)"></v-numbox>
             </li>
             <li>
-              <a href="javascript:void(0)">删除</a>
+              <a href="javascript:void(0)" @click="remove(item.id)">删除</a>
             </li>
           </ul>
         </div>
@@ -42,6 +42,7 @@
 <script>
   import config from '../../js/config.js';
   import Ctitle from '../common/title.vue';
+  import Cnumbox from '../common/numbox.vue';
   import goodsStorage from '../../js/model/goods.js';
 
   export default {
@@ -65,6 +66,7 @@
 
      // 总价格
      priceTotal() {
+       let title = this.title;
        let priceArr = this.shopcartList.map(item => item.selected? +goodsStorage.get(item.id) * item.sell_price: 0);
        return priceArr.length && priceArr.reduce((v1, v2) => v1 + v2);
      }
@@ -92,6 +94,33 @@
           });
         }
       });
+     },
+
+     // 删除商品
+     remove(id) {
+
+       // 页面中删除，这样做开销有点大，因为把原来的整个数组覆盖掉了
+       // 在vue中覆盖一个数组，vue需要重新遍历整个数组重新对每个值进行监听
+       //  this.shopcartList = this.shopcartList.filter(item => item.id !== id);
+
+       // 找到要删除商品的下标，如果有则删除
+       let index = this.shopcartList.findIndex(item => item.id == id);
+       index > -1 && this.shopcartList.splice(index, 1);
+
+       // 本地永久删除
+       goodsStorage.remove(id);
+     },
+
+     // 通过id拿到商品的选购数量
+     getTotal(id) {
+       return goodsStorage.get(id);
+     },
+
+     // 更新指定商品的购买数量
+     upTotal(id, total) {
+       this.shopcartList[0].selected = !this.shopcartList[0].selected;
+       this.shopcartList[0].selected = !this.shopcartList[0].selected;
+       goodsStorage.set(id, total);
      }
    },
 
@@ -100,7 +129,8 @@
    },
 
    components: {
-     'v-title': Ctitle
+     'v-title': Ctitle,
+     'v-numbox': Cnumbox
    }
 
  };
