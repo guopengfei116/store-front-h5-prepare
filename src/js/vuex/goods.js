@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import storage from '../common/storage.js';
 
 // 商品购买数量的数据格式为：{ id1: total, id2: total, id3: total }
@@ -42,9 +43,11 @@ export default {
             Vue.set(state, obj.id, obj.total);  // ****这里的id可能是新id，如果给数据添加新的属性，vue是
             storage.set(storageKey, state);
         },
-
+ 
         // 根据id删除对应商品的数量,删除后记得持久化存储最新结果
         remove(state, id) {
+            // 直接把数据删除掉和直接给对象添加新属性一样，vue无法刷新视图，那么我们就先set方法把数据设为null，最后再删除
+            Vue.set(state, id, null);  
             delete state[id];
             storage.set(storageKey, state);
         }

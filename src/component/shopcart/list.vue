@@ -109,22 +109,19 @@
        index > -1 && this.shopcartList.splice(index, 1);
 
        // 本地永久删除
-       goodsStorage.remove(id);
+       this.$store.commit('remove', id);
      },
 
      // 通过id拿到商品的选购数量
      getTotal(id) {
-       return goodsStorage.get(id);
+       return this.$store.state[id];
      },
 
      // 更新指定商品的购买数量
      upTotal(id, total) {
        this.shopcartList[0].selected = !this.shopcartList[0].selected;
        this.shopcartList[0].selected = !this.shopcartList[0].selected;
-       goodsStorage.set(id, total);
-       
-       // 把商品的总数挂载上去
-       document.querySelector('.mui-badge').innerHTML = goodsStorage.get();
+       this.$store.commit('set', { id, total })
      },
 
      // 付款

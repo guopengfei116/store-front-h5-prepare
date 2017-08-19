@@ -56,7 +56,6 @@
 
 <script>
   import config from '../../js/config.js';
-  import goodsStorage from '../../js/model/goods.js';
   import Ctitle from '../common/title.vue';
   import Cswipe from '../common/swipe.vue';
   import Ccomment from '../common/comment.vue';
@@ -72,7 +71,7 @@
         goods: {},
         selectedTab: '',
         id: this.$route.params.id,
-        total: goodsStorage.get(this.$route.params.id) // 页面一上来就从本地读取这个商品的历史购买数量
+        total: this.$store.state[this.$route.params.id] // 页面一上来就从本地读取这个商品的历史购买数量
       }
     },
 
@@ -107,11 +106,8 @@
       // 加入购物车
       addShopcart() {
 
-        // 点击购物车，就把这个商品的购买数量持久化记录下来
-        goodsStorage.set(this.id, this.total);
-
-        // 点击购物车后，把商品的总数挂载上去
-        document.querySelector('.mui-badge').innerHTML = goodsStorage.get();
+        // 注意：使用commit间接调用mutations里面定义的修改数据方法
+        this.$store.commit('set', { id: this.id, total: this.total });
       }
     },
 
