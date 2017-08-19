@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import Vuex from 'vuex';
 import MintUI from 'mint-ui';    // MintUI是vue插件，将来需要手动use才可以使用
+import { Indicator } from 'mint-ui';
 import 'mint-ui/lib/style.css';  // 引入样式库还需单独导入css文件
 import 'mui/dist/css/mui.css';    // 引入mui样式
 import 'mui/examples/hello-mui/css/icons-extra.css'; // 引入mui的扩展图标样式
@@ -13,6 +14,21 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(Vuex);
 Vue.use(MintUI);
+
+// 使用拦截器添加统一的loading
+Vue.http.interceptors.push(function(req, next) {
+    // 在这里我们可以做一些请求之前的事情
+    // alert('要发送请求了');
+    // console.log(req);
+    Indicator.open('loading...');
+
+    // 如果需要发送请求，请调用next方法，next方法我们也可以通过回调的方式对返回结果进行统一处理。
+    next(function(rep) {
+        // alert('请求完毕了');
+        // console.log(rep);
+        Indicator.close();
+    });
+});
 
 // 二、导入我们自己的东西
 
@@ -40,3 +56,4 @@ new Vue({
     router,
     store: new Vuex.Store(Vgoods)
 });
+
