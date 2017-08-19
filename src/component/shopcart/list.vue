@@ -61,24 +61,26 @@
      // 总数量
      sumTotal() {
         // 遍历取出每个商品的数量，如果这个商品是未选中状态，那么数量设为0
-        let totalArr = this.shopcartList.map(item => item.selected? +goodsStorage.get(item.id): 0);
+        let totalArr = this.shopcartList.map(item => item.selected? + this.$store.state[item.id]: 0);
         return totalArr.length && totalArr.reduce((v1, v2) => v1 + v2);
      },
 
      // 总价格
      priceTotal() {
        let title = this.title;
-       let priceArr = this.shopcartList.map(item => item.selected? +goodsStorage.get(item.id) * item.sell_price: 0);
+       let priceArr = this.shopcartList.map(item => item.selected? + this.$store.state[item.id] * item.sell_price: 0);
        return priceArr.length && priceArr.reduce((v1, v2) => v1 + v2);
      }
    },
 
    methods: {
+
      // 获取购物车商品数据
      getShopcartList() {
 
       // 如果之前没有选购过商品，就不用请求接口了
-      let idList = goodsStorage.getIDList();
+      let idList = this.$store.getters.getIDList;
+      // let idList = goodsStorage.getIDList();
       if(!idList.length) { return; }
 
       // 有的话再请求
@@ -119,9 +121,7 @@
 
      // 更新指定商品的购买数量
      upTotal(id, total) {
-       this.shopcartList[0].selected = !this.shopcartList[0].selected;
-       this.shopcartList[0].selected = !this.shopcartList[0].selected;
-       this.$store.commit('set', { id, total })
+       this.$store.commit('set', { id, total });
      },
 
      // 付款
